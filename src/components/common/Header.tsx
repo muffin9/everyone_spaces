@@ -2,8 +2,12 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Logo from './Logo';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Header() {
+  const { user, isLoading, signOut } = useAuth();
+
   return (
     <motion.header
       initial={{ y: -100 }}
@@ -16,28 +20,32 @@ export default function Header() {
           whileHover={{ scale: 1.05 }}
           transition={{ type: 'spring', stiffness: 400 }}
         >
-          <Link href="/" className="text-2xl font-bold">
-            모두의공간
+          <Link href="/" className="flex gap-4 items-center text-2xl font-bold">
+            <Logo />
+            모두의 공간
           </Link>
         </motion.div>
         <nav>
-          <ul className="flex space-x-4">
-            {[
-              { href: '/search', label: '공간 찾기' },
-              { href: '/host', label: '호스트 되기' },
-              { href: '/login', label: '로그인' },
-            ].map((item) => (
-              <motion.li
-                key={item.href}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.95 }}
+          {isLoading ? (
+            <span className="text-sm text-gray-400">로딩중...</span>
+          ) : user ? (
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-600">{user.email}</span>
+              <button
+                onClick={signOut}
+                className="text-sm text-gray-600 hover:text-gray-900"
               >
-                <Link href={item.href} className="hover:text-gray-600">
-                  {item.label}
-                </Link>
-              </motion.li>
-            ))}
-          </ul>
+                로그아웃
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="text-sm text-gray-600 hover:text-gray-900"
+            >
+              로그인
+            </Link>
+          )}
         </nav>
       </div>
     </motion.header>
