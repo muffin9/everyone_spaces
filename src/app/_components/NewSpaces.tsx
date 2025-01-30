@@ -4,42 +4,12 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, MapPin, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { getCurrentMonth } from '@/lib/date';
+import { Space } from '@/schema/spaces';
+import { useRouter } from 'next/navigation';
 
-const spaces = [
-  {
-    id: 1,
-    name: '도심 속 아늑한 스튜디오',
-    location: '서울 강남구',
-    price: '시간당 30,000원',
-    tag: '인기',
-    rating: 4.8,
-  },
-  {
-    id: 2,
-    name: '모던한 회의실',
-    location: '서울 마포구',
-    price: '시간당 50,000원',
-    tag: '인기',
-    rating: 4.5,
-  },
-  {
-    id: 3,
-    name: '감성 가득한 카페',
-    location: '서울 성동구',
-    price: '시간당 20,000원',
-    tag: '인기',
-    rating: 4.7,
-  },
-  {
-    id: 4,
-    name: '넓은 공연장',
-    location: '서울 용산구',
-    price: '시간당 100,000원',
-    tag: '특가',
-    rating: 4.9,
-  },
-];
+interface NewSpacesProps {
+  newSpaces: Space[];
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -63,7 +33,8 @@ const itemVariants = {
   },
 };
 
-export default function RecommendedSpaces() {
+export default function NewSpaces({ newSpaces }: NewSpacesProps) {
+  const router = useRouter();
   return (
     <section className="my-16">
       <motion.div
@@ -74,12 +45,10 @@ export default function RecommendedSpaces() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-3xl font-bold mb-2">
-              <span className="text-red-500">Hot {getCurrentMonth()}월 </span>
-              추천 공간
+              <span className="text-primary">New </span>
+              공간
             </h2>
-            <p className="text-gray-600">
-              최고 평점을 받은 인기 공간을 만나보세요
-            </p>
+            <p className="text-gray-600">새로운 공간을 만나보세요</p>
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -96,12 +65,13 @@ export default function RecommendedSpaces() {
           animate="visible"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {spaces.map((space) => (
+          {newSpaces.map((space) => (
             <motion.div
               key={space.id}
               variants={itemVariants}
               whileHover={{ y: -8 }}
               className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() => router.push(`/space/${space.id}`)}
             >
               <div className="relative">
                 <Image
@@ -111,9 +81,7 @@ export default function RecommendedSpaces() {
                   height={200}
                   className="w-full h-48 object-cover"
                 />
-                <Badge className="absolute top-3 left-3 bg-red-500">
-                  {space.tag}
-                </Badge>
+                <Badge className="absolute top-3 left-3">{space.status}</Badge>
               </div>
 
               <div className="p-4">
@@ -122,18 +90,18 @@ export default function RecommendedSpaces() {
                     {space.name}
                   </h3>
                   <span className="text-sm font-medium bg-primary/10 text-primary px-2 py-1 rounded">
-                    ★ {space.rating}
+                    ★ {space.base_price}
                   </span>
                 </div>
 
                 <div className="space-y-2">
                   <p className="text-sm text-gray-600 flex items-center">
                     <MapPin className="h-4 w-4 mr-1 text-gray-400" />
-                    {space.location}
+                    {space.latitude} {space.longitude}
                   </p>
                   <p className="text-sm text-gray-600 flex items-center">
                     <Clock className="h-4 w-4 mr-1 text-gray-400" />
-                    {space.price}
+                    {space.base_price}
                   </p>
                 </div>
 

@@ -3,6 +3,9 @@ import SearchBar from '@/components/common/SearchBar';
 import CategorySection from './_components/CategorySection';
 import RecommendedSpaces from './_components/RecommendedSpaces';
 import Footer from '@/components/common/Footer';
+import HostCard from './_components/HostCard';
+import NewSpaces from './_components/NewSpaces';
+import NewSpacesSection from './_components/NewSpacesSection';
 
 export default function Home() {
   return (
@@ -15,7 +18,9 @@ export default function Home() {
           </h1>
           <SearchBar />
           <CategorySection />
+          <NewSpacesSection />
           <RecommendedSpaces />
+          <HostCard />
         </div>
       </main>
       <Footer />
