@@ -1,8 +1,8 @@
 'use client';
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from 'supabase/supabase';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { NextResponse } from 'next/server';
 import { motion } from 'framer-motion';
 
 const fadeInUp = {
@@ -12,23 +12,18 @@ const fadeInUp = {
 };
 
 const LoginForm = () => {
-  const router = useRouter();
-  const supabase = createClientComponentClient();
-
   const handleKakaoLogin = async () => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await createClient.auth.signInWithOAuth({
         provider: 'kakao',
         options: {
-          redirectTo: `/auth/callback`,
-          queryParams: {
-            scope: 'profile_nickname profile_image',
-          },
+          redirectTo: `http://localhost:3000/auth/callback`,
         },
       });
 
       if (error) throw error;
-      router.refresh();
+
+      return NextResponse.json(data, { status: 200 });
     } catch (error) {
       console.error('Error:', error);
     }

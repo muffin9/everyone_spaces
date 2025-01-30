@@ -1,9 +1,9 @@
 'use client';
 
-import { HomeIcon } from 'lucide-react';
 import LoginForm from './login-form';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Logo from '@/components/common/Logo';
 
 export default function LoginPage() {
   return (
@@ -33,9 +33,7 @@ export default function LoginPage() {
               href="/"
               className="flex items-center gap-2 self-center font-medium"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/20">
-                <HomeIcon className="size-6" />
-              </div>
+              <Logo />
               <span className="text-2xl font-bold tracking-tight">
                 모두의공간
               </span>
