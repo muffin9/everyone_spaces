@@ -13,13 +13,60 @@ export interface Profile {
   business_registration_number?: string;
 }
 
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
 export interface Database {
-  public: {
+  public: { 
     Tables: {
-      profiles: {
-        Row: Profile;
-        Insert: Omit<Profile, 'id' | 'updated_at'>;
-        Update: Partial<Omit<Profile, 'id'>>;
+      users: {
+        Row: {
+          id: string;
+          aud: string;
+          email: string | null;
+          full_name: string | null;
+          phone_number: string | null;
+          avatar_url: string | null;
+          is_host: boolean;
+          created_at: string;
+          updated_at: string;
+          provider: string | null;
+          provider_id: string | null;
+          metadata: Json | null;
+        };
+        Insert: {
+          id: string;
+          aud?: string;
+          email?: string | null;
+          full_name?: string | null;
+          phone_number?: string | null;
+          avatar_url?: string | null;
+          is_host?: boolean;
+          created_at?: string;
+          updated_at?: string;
+          provider?: string | null;
+          provider_id?: string | null;
+          metadata?: Json | null;
+        };
+        Update: {
+          id?: string;
+          aud?: string;
+          email?: string | null;
+          full_name?: string | null;
+          phone_number?: string | null;
+          avatar_url?: string | null;
+          is_host?: boolean;
+          created_at?: string;
+          updated_at?: string;
+          provider?: string | null;
+          provider_id?: string | null;
+          metadata?: Json | null;
+        };
       };
       categories: {
         Row: {
@@ -55,7 +102,7 @@ export interface Database {
           max_capacity: number | null;
           base_price: number;
           minimum_hours: number;
-          amenities: Record<string, any> | null;
+          amenities: Json | null;
           rules: string[] | null;
           status: string;
           created_at: string;
@@ -74,7 +121,7 @@ export interface Database {
           max_capacity?: number | null;
           base_price: number;
           minimum_hours?: number;
-          amenities?: Record<string, any> | null;
+          amenities?: Json | null;
           rules?: string[] | null;
           status?: string;
           created_at?: string;
@@ -93,7 +140,7 @@ export interface Database {
           max_capacity?: number | null;
           base_price?: number;
           minimum_hours?: number;
-          amenities?: Record<string, any> | null;
+          amenities?: Json | null;
           rules?: string[] | null;
           status?: string;
           created_at?: string;
@@ -285,7 +332,52 @@ export interface Database {
       [_ in never]: never;
     };
     Enums: {
-      [_ in never]: never;
+      user_role: 'guest' | 'host' | 'admin';
     };
   };
 }
+
+export interface KakaoUserMetadata {
+  avatar_url: string;
+  email: string;
+  email_verified: boolean;
+  full_name: string;
+  iss: string;
+  name: string;
+  picture: string;
+  provider_id: string;
+  sub: string;
+}
+
+export type SupabaseUser = {
+  id: string;
+  aud: string;
+  role: string;
+  email?: string;
+  email_confirmed_at?: string;
+  phone?: string;
+  confirmed_at?: string;
+  last_sign_in_at?: string;
+  app_metadata: {
+    provider?: string;
+    providers?: string[];
+  };
+  user_metadata: KakaoUserMetadata;
+  identities?: {
+    id: string;
+    user_id: string;
+    identity_data: {
+      avatar_url: string;
+      email: string;
+      full_name: string;
+      provider_id: string;
+      sub: string;
+    };
+    provider: string;
+    last_sign_in_at: string;
+    created_at: string;
+    updated_at: string;
+  }[];
+  created_at: string;
+  updated_at: string;
+};
