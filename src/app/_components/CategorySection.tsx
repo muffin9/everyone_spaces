@@ -1,4 +1,3 @@
-import { createClient } from 'supabase/supabase';
 import {
   MainCategoryWithSubs,
   categoriesResponseSchema,
@@ -8,17 +7,9 @@ import { Suspense } from 'react';
 import { CategoryList } from './CategoryList';
 
 export async function getAllCategories(): Promise<MainCategoryWithSubs[]> {
-  const { data, error } = await createClient
-    .from('categories')
-    .select(
-      `id, name, description, icon_url, parent_id, is_active, display_order`,
-    )
-    .order('display_order');
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category`);
 
-  if (error) {
-    console.error('Error fetching categories:', error);
-    return [];
-  }
+  const data = await response.json();
 
   try {
     // 받아온 데이터 검증
@@ -28,7 +19,7 @@ export async function getAllCategories(): Promise<MainCategoryWithSubs[]> {
     const groupedCategories = validatedData.reduce<
       Record<string, MainCategoryWithSubs>
     >((acc, category) => {
-      if (!category.parent_id) {
+      if (!category.parentId) {
         // 메인 카테고리
         acc[category.id] = mainCategoryWithSubsSchema.parse({
           ...category,
@@ -36,8 +27,8 @@ export async function getAllCategories(): Promise<MainCategoryWithSubs[]> {
         });
       } else {
         // 하위 카테고리
-        if (acc[category.parent_id]) {
-          acc[category.parent_id].subCategories.push(category);
+        if (acc[category.parentId]) {
+          acc[category.parentId].subCategories.push(category);
         }
       }
       return acc;

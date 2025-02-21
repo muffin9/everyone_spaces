@@ -1,23 +1,14 @@
-import { createClient } from 'supabase/supabase';
 import { spacesResponseSchema } from '@/schema/spaces';
 import { Suspense } from 'react';
 import NewSpaces from './NewSpaces';
 
 async function getNewSpaces() {
-  const { data, error } = await createClient
-    .from('spaces')
-    .select('*')
-    .order('created_at', { ascending: false })
-    .limit(4);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/spaces`);
 
-  if (error) {
-    console.error('Error fetching spaces:', error);
-    return [];
-  }
+  const data = await response.json();
 
   try {
-    const validatedData = spacesResponseSchema.parse(data);
-    console.log(validatedData);
+    const validatedData = spacesResponseSchema.parse(data.spaces);
     return Object.values(validatedData);
   } catch (error) {
     console.error('Data validation error:', error);
@@ -27,7 +18,6 @@ async function getNewSpaces() {
 
 export default async function NewSpacesSection() {
   const newSpaces = await getNewSpaces();
-  console.log(newSpaces);
 
   if (!newSpaces.length) {
     return (

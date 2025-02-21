@@ -39,7 +39,7 @@ export default function Footer() {
       variants={footerVariants}
       className="bg-muted/40 mt-12"
     >
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <motion.div className="space-y-4">
             <h3 className="text-xl font-bold">모두의공간</h3>
@@ -78,15 +78,15 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
                 <PhoneIcon className="h-4 w-4" />
-                1544-0000
+                010-2548-6707
               </li>
               <li className="flex items-center gap-2">
                 <MailIcon className="h-4 w-4" />
-                support@modoo.space
+                jinha6707@gmail.com
               </li>
               <li className="flex items-center gap-2">
                 <MapPinIcon className="h-4 w-4" />
-                서울특별시 강남구
+                서울특별시 구로구 구로3동
               </li>
             </ul>
           </motion.div>
