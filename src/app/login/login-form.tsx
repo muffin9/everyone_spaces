@@ -1,8 +1,6 @@
 'use client';
 
-import { createClient } from 'supabase/supabase';
 import Image from 'next/image';
-import { NextResponse } from 'next/server';
 import { motion } from 'framer-motion';
 
 const fadeInUp = {
@@ -14,18 +12,13 @@ const fadeInUp = {
 const LoginForm = () => {
   const handleKakaoLogin = async () => {
     try {
-      const { data, error } = await createClient.auth.signInWithOAuth({
-        provider: 'kakao',
-        options: {
-          redirectTo: `http://localhost:3000/auth/callback`,
-        },
-      });
-
-      if (error) throw error;
-
-      return NextResponse.json(data, { status: 200 });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/kakao`,
+      );
+      const data = await response.json();
+      window.location.href = data.url;
     } catch (error) {
-      console.error('Error:', error);
+      console.error('카카오 로그인 에러:', error);
     }
   };
 

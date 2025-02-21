@@ -1,25 +1,49 @@
 import { z } from 'zod';
+import { categorySchema } from './category';
+import { spaceImagesSchema } from './spaceImages';
+import { spaceCautionSchema } from './spaceCaution';
+import { operatingHourSchema } from './operatingHour';
 
 export const spacesSchema = z.object({
-  id: z.string(), // 문자열 (UUID or Unique ID)
-  host_id: z.string(), // 호스트 ID (외래 키)
-  category_id: z.string(), // 카테고리 ID (외래 키)
+  id: z.string().uuid(), // UUID 형식 명시
+  hostId: z.string().uuid().nullable(), // UUID, nullable
+  categoryId: z.string().uuid().nullable(), // UUID, nullable
   name: z.string(), // 공간 이름
   description: z.string().nullable(), // 설명 (nullable)
   address: z.string(), // 주소
-  detailed_address: z.string().nullable(), // 상세 주소 (nullable)
-  latitude: z.number().nullable(), // 위도 (nullable)
-  longitude: z.number().nullable(), // 경도 (nullable)
-  max_capacity: z.number().nullable(), // 최대 수용 인원 (nullable)
-  base_price: z.number(), // 기본 가격 (필수)
-  minimum_hours: z.number(), // 최소 이용 시간 (필수)
-  amenities: z.any().nullable(), // JSON 형태 (nullable)
+  detailedAddress: z.string().nullable(), // 상세 주소 (nullable)
+  latitude: z.number(), // numeric type은 nullable
+  longitude: z.number(),
+  maxCapacity: z.number().nullable(), // 최대 수용 인원 (nullable)
+  basePrice: z.number(), // 기본 가격 (필수)
+  minimumHours: z.number().default(1), // default 값 추가
+  amenities: z.record(z.boolean()), // jsonb type은 nullable
   rules: z.array(z.string()).nullable(), // 규칙 배열 (nullable)
-  status: z.string(), // 상태 (예: 'active', 'inactive')
-  created_at: z.string(), // 생성 날짜 (ISO String)
-  updated_at: z.string(), // 업데이트 날짜 (ISO String)
+  status: z.string().default('active'),
+  cancellationPolicy: z.string().nullable(), // nullable 추가
+  preparationTime: z.number().default(0),
+  cleanupTime: z.number().default(0),
+  availableStartTime: z.string().nullable(), // time type은 nullable
+  availableEndTime: z.string().nullable(),
+  minBookingNotice: z.number().default(0),
+  maxBookingDays: z.number().default(90),
+  instantBooking: z.boolean().default(false),
+  ratingAverage: z.number().default(0),
+  reviewCount: z.number().default(0),
+  viewCount: z.number().default(0),
+  createdAt: z.string(), // timestamp with time zone
+  updatedAt: z.string(),
+  category: categorySchema,
+  images: z.array(spaceImagesSchema),
 });
 
-export const spacesResponseSchema = z.array(spacesSchema)
+export const spaceInfoSchema = spacesSchema.extend({
+  cautions: z.array(spaceCautionSchema).default([]),
+  operatingHours: z.array(operatingHourSchema).default([]),
+});
 
-export type Space = z.infer<typeof spacesSchema>; // TypeScript 타입 생성
+export const spacesResponseSchema = z.array(spacesSchema);
+
+export type SpaceType = z.infer<typeof spacesSchema>; // TypeScript 타입 생성
+
+export type SpaceInfoType = z.infer<typeof spaceInfoSchema>;

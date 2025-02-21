@@ -4,11 +4,11 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, MapPin, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Space } from '@/schema/spaces';
+import { SpaceType } from '@/schema/spaces';
 import { useRouter } from 'next/navigation';
 
 interface NewSpacesProps {
-  newSpaces: Space[];
+  newSpaces: SpaceType[];
 }
 
 const containerVariants = {
@@ -35,6 +35,7 @@ const itemVariants = {
 
 export default function NewSpaces({ newSpaces }: NewSpacesProps) {
   const router = useRouter();
+
   return (
     <section className="my-16">
       <motion.div
@@ -75,7 +76,7 @@ export default function NewSpaces({ newSpaces }: NewSpacesProps) {
             >
               <div className="relative">
                 <Image
-                  src={`/placeholder.svg?height=200&width=300&text=${space.name}`}
+                  src={space.images[0].imageUrl || '/kakao-logo.png'}
                   alt={space.name}
                   width={300}
                   height={200}
@@ -90,7 +91,7 @@ export default function NewSpaces({ newSpaces }: NewSpacesProps) {
                     {space.name}
                   </h3>
                   <span className="text-sm font-medium bg-primary/10 text-primary px-2 py-1 rounded">
-                    ★ {space.base_price}
+                    ★ {space.basePrice}
                   </span>
                 </div>
 
@@ -101,7 +102,7 @@ export default function NewSpaces({ newSpaces }: NewSpacesProps) {
                   </p>
                   <p className="text-sm text-gray-600 flex items-center">
                     <Clock className="h-4 w-4 mr-1 text-gray-400" />
-                    {space.base_price}
+                    {space.basePrice}
                   </p>
                 </div>
 
