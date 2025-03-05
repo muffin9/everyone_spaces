@@ -3,8 +3,6 @@
 import { AmenityKey, space_amenities } from '@/constants/space';
 import { Separator } from '../ui/separator';
 import Image from 'next/image';
-import { Button } from '../ui/button';
-import { useRouter } from 'next/navigation';
 
 interface SpaceInfoProps {
   infoData: {
@@ -20,11 +18,9 @@ interface SpaceInfoProps {
 }
 
 export default function SpaceInfo({ infoData }: SpaceInfoProps) {
-  const router = useRouter();
   return (
     <section className="relative flex flex-col gap-2">
       <header>
-        <Button onClick={() => router.push('/payment')}>결제하기</Button>
         <h2 className="text-3xl font-bold">{infoData.name}</h2>
         <h4 className="text-gray-500">
           {infoData.address} {infoData.detailed_address}

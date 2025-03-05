@@ -4,6 +4,7 @@ import KakaoSpaceMap from '@/components/spaceDetail/KakaoSpaceMap';
 import RefundPolicy from '@/components/spaceDetail/RefundPolicy';
 import SpaceCaution from '@/components/spaceDetail/SpaceCaution';
 import SpaceInfo from '@/components/spaceDetail/SpaceInfo';
+import StickyPricing from '@/components/spaceDetail/StickyPricing';
 import { Separator } from '@/components/ui/separator';
 import { spaceInfoSchema, SpaceInfoType } from '@/schema/spaces';
 
@@ -32,7 +33,7 @@ export default async function SpaceDetailPage({
   const spaceInfo = (await getSpaceInfo(params.id)) as SpaceInfoType;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="relative flex flex-col min-h-screen">
       <Header />
       <section className="flex-grow">
         <div className="max-w-6xl mx-auto">
@@ -59,6 +60,11 @@ export default async function SpaceDetailPage({
           <RefundPolicy />
         </div>
       </section>
+      <StickyPricing
+        pricings={spaceInfo.pricing}
+        spaceName={spaceInfo.name}
+        spaceId={params.id}
+      />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { categorySchema } from './category';
 import { spaceImagesSchema } from './spaceImages';
 import { spaceCautionSchema } from './spaceCaution';
 import { operatingHourSchema } from './operatingHour';
+import { spacePricingSchema } from './spacePricing';
 
 export const spacesSchema = z.object({
   id: z.string().uuid(), // UUID 형식 명시
@@ -35,6 +36,7 @@ export const spacesSchema = z.object({
   updatedAt: z.string(),
   category: categorySchema,
   images: z.array(spaceImagesSchema),
+  pricing: z.array(spacePricingSchema),
 });
 
 export const spaceInfoSchema = spacesSchema.extend({
