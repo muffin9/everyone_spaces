@@ -6,9 +6,10 @@ import {
   QueryCache,
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
+import ChannelService from '@/hooks/channelTalk/service';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -52,6 +53,14 @@ export function Providers({ children }: ProvidersProps) {
         }),
       }),
   );
+
+  useEffect(() => {
+    ChannelService.loadScript();
+
+    ChannelService.boot({
+      pluginKey: process.env.NEXT_PUBLIC_CHANNEL_PLUGIN_KEY || '',
+    });
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
