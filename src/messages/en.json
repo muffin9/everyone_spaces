@@ -1,0 +1,25 @@
+{
+  "LanguageSwitcher": {
+    "ko": "KO",
+    "en": "EN",
+    "ja": "JA"
+  },
+  "common": {
+    "reserve": "Reserve",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "reserve": {
+    "title": "Reservation Info",
+    "pricing": "Pricing Plan",
+    "pricePerHour": "Price per Hour",
+    "minHours": "Minimum Hours",
+    "maxHours": "Maximum Hours",
+    "selectDate": "Select Date",
+    "selectTime": "Select Time",
+    "totalPrice": "Total Price",
+    "selectedTime": "Selected Time",
+    "hours": "hours",
+    "price": "KRW"
+  }
+}
