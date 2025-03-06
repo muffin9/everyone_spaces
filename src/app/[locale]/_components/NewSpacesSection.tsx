@@ -1,11 +1,10 @@
 import { spacesResponseSchema } from '@/schema/spaces';
 import { Suspense } from 'react';
 import NewSpaces from './NewSpaces';
+import { fetchApi } from '@/lib/api';
 
 async function getNewSpaces() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/spaces`);
-
-  const data = await response.json();
+  const data = await fetchApi('/spaces');
 
   try {
     const validatedData = spacesResponseSchema.parse(data.spaces);

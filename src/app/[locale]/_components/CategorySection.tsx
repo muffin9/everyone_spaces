@@ -5,13 +5,12 @@ import {
 } from '@/schema/category';
 import { Suspense } from 'react';
 import { CategoryList } from './CategoryList';
+import { fetchApi } from '@/lib/api';
 
 export async function getAllCategories(): Promise<MainCategoryWithSubs[]> {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category`);
-
-  const data = await response.json();
-
   try {
+    const data = await fetchApi('/category');
+
     // 받아온 데이터 검증
     const validatedData = categoriesResponseSchema.parse(data);
 
@@ -36,7 +35,7 @@ export async function getAllCategories(): Promise<MainCategoryWithSubs[]> {
 
     return Object.values(groupedCategories);
   } catch (error) {
-    console.error('Data validation error:', error);
+    console.error('Data processing error:', error);
     return [];
   }
 }

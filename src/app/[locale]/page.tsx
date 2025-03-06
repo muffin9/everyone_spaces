@@ -1,4 +1,3 @@
-import Header from '@/components/common/Header';
 import SearchBar from '@/components/common/SearchBar';
 import CategorySection from './_components/CategorySection';
 import RecommendedSpaces from './_components/RecommendedSpaces';
@@ -9,7 +8,6 @@ import NewSpacesSection from './_components/NewSpacesSection';
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
       <main className="flex-grow">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold text-center my-8">

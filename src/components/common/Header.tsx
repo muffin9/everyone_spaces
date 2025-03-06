@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Logo from './Logo';
 import { useAuth } from '@/hooks/useAuth';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Header() {
   const { user, isLoading, signOut } = useAuth();
@@ -25,28 +26,31 @@ export default function Header() {
             모두의 공간
           </Link>
         </motion.div>
-        <nav>
-          {isLoading ? (
-            <span className="text-sm text-gray-400">로딩중...</span>
-          ) : user ? (
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600">{user.email}</span>
-              <button
-                onClick={signOut}
+        <div className="flex items-center gap-4">
+          <nav>
+            {isLoading ? (
+              <span className="text-sm text-gray-400">로딩중...</span>
+            ) : user ? (
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-gray-600">{user.email}</span>
+                <button
+                  onClick={signOut}
+                  className="text-sm text-gray-600 hover:text-gray-900"
+                >
+                  로그아웃
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
                 className="text-sm text-gray-600 hover:text-gray-900"
               >
-                로그아웃
-              </button>
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="text-sm text-gray-600 hover:text-gray-900"
-            >
-              로그인
-            </Link>
-          )}
-        </nav>
+                로그인
+              </Link>
+            )}
+          </nav>
+          <LanguageSwitcher />
+        </div>
       </div>
     </motion.header>
   );

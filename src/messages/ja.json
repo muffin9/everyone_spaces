@@ -1,0 +1,25 @@
+{
+  "LanguageSwitcher": {
+    "ko": "韓国語",
+    "en": "英語",
+    "ja": "日本語"
+  },
+  "common": {
+    "reserve": "予約する",
+    "cancel": "キャンセル",
+    "confirm": "確認"
+  },
+  "reserve": {
+    "title": "予約情報",
+    "pricing": "料金プラン",
+    "pricePerHour": "時間料金",
+    "minHours": "最小予約時間",
+    "maxHours": "最大予약時間",
+    "selectDate": "予約日選択",
+    "selectTime": "予約時間選択",
+    "totalPrice": "合計金額",
+    "selectedTime": "選択時間",
+    "hours": "時間",
+    "price": "円"
+  }
+}

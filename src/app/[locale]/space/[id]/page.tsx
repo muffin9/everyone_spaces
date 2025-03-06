@@ -32,8 +32,7 @@ export default async function SpaceDetailPage({
   const spaceInfo = (await getSpaceInfo(params.id)) as SpaceInfoType;
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
+    <div className="relative flex flex-col min-h-screen">
       <section className="flex-grow">
         <div className="max-w-6xl mx-auto">
           <ImageView images={spaceInfo.images} />
